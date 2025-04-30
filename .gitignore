@@ -1,0 +1,44 @@
+## .NET Core
+bin/
+obj/
+**/Properties/launchSettings.json
+.vscode/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# Visual Studio Code
+.vscode/
+.vs/
+
+# Dotnet-specific
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Core
+appsettings.*.json
+appsettings.Development.json
+
+# User-specific files
+*.swp
+*.tmp
+*.bak
+*.log
+
+# Publish output
+*.Publish.xml
+*.dbmdl
+
+# Test results
+TestResults/
+*.coverage
+*.coveragexml
+*.trx
+
+# nuget
+*.nupkg
+.nuget/
+packages/
