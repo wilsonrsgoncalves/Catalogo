@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace APICatalogo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250429172439_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250505175207_PopulateTables")]
+    partial class PopulateTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "9.0.0-rc.2.24474.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -30,7 +30,7 @@ namespace APICatalogo.Migrations
                     b.Property<int>("CategoriaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("categoriaid");
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CategoriaId"));
 
@@ -38,7 +38,7 @@ namespace APICatalogo.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)")
-                        .HasColumnName("imagemurl");
+                        .HasColumnName("imagem_url");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -46,8 +46,7 @@ namespace APICatalogo.Migrations
                         .HasColumnType("character varying(80)")
                         .HasColumnName("nome");
 
-                    b.HasKey("CategoriaId")
-                        .HasName("pk_categorias");
+                    b.HasKey("CategoriaId");
 
                     b.ToTable("categorias");
                 });
@@ -57,17 +56,17 @@ namespace APICatalogo.Migrations
                     b.Property<int>("ProdutoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("produtoid");
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProdutoId"));
 
                     b.Property<int>("CategoriaId")
                         .HasColumnType("integer")
-                        .HasColumnName("categoriaid");
+                        .HasColumnName("categoria_id");
 
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("datacadastro");
+                        .HasColumnName("data_cadastro");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -83,7 +82,7 @@ namespace APICatalogo.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)")
-                        .HasColumnName("imagemurl");
+                        .HasColumnName("imagem_url");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -95,11 +94,9 @@ namespace APICatalogo.Migrations
                         .HasColumnType("decimal(10,2)")
                         .HasColumnName("preco");
 
-                    b.HasKey("ProdutoId")
-                        .HasName("pk_produtos");
+                    b.HasKey("ProdutoId");
 
-                    b.HasIndex("CategoriaId")
-                        .HasDatabaseName("ix_produtos_categoriaid");
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("produtos");
                 });
@@ -110,8 +107,7 @@ namespace APICatalogo.Migrations
                         .WithMany("Produtos")
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_produtos_categorias_categoriaid");
+                        .IsRequired();
 
                     b.Navigation("Categoria");
                 });
