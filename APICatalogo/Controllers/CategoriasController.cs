@@ -42,12 +42,7 @@ namespace APICatalogo.Controllers
         [HttpGet("{id:int}", Name = "ObterCategoria")]
         public async Task<ActionResult<Categoria>> Get(int id)
         {
-            //throw new Exception("Exceção ao retornar o produto por id.");
-
-            string[] teste = null;
-            if (teste.Length > 0) { 
-            }
-
+        
             if (_context.Categorias == null)
             {
                 return NotFound("No categories available.");

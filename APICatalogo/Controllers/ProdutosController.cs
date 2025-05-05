@@ -1,4 +1,5 @@
 ﻿using APICatalogo.Context;
+using APICatalogo.Filters;
 using APICatalogo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,13 +8,12 @@ namespace APICatalogo.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class ProdutosController : ControllerBase
+public class ProdutosController(AppDbContext context) : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly AppDbContext _context = context;
 
-    public ProdutosController(AppDbContext context) => _context = context;
-
-    [HttpGet]
+    [HttpGet]    
+    [ServiceFilter<ApiLoggingFilter>]
     public ActionResult<IEnumerable<Produto>> Get()
     {
 
@@ -67,6 +67,8 @@ public class ProdutosController : ControllerBase
     [HttpPut("{id:int}")]
     public ActionResult Put(int id, Produto produto)
     {
+        
+
         if (id != produto.ProdutoId)
         {
             return BadRequest();
