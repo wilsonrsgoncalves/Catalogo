@@ -1,5 +1,6 @@
 
 using APICatalogo.Extensions;
+using APICatalogo.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
