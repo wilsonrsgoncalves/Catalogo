@@ -60,7 +60,7 @@ public class ProdutosController(IUnitOfWork unitOfWork) : ControllerBase
     public ActionResult Put(int id, Produto produto)
     {
         if (id != produto.ProdutoId)
-        {
+        { 
             return BadRequest();//400
         }
 
