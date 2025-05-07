@@ -1,29 +1,16 @@
-using APICatalogo.Context;
+
 using APICatalogo.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Text.Json.Serialization;
+using APICatalogo.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllers()
-      .AddJsonOptions(options =>
-         options.JsonSerializerOptions
-            .ReferenceHandler = ReferenceHandler.IgnoreCycles);
+// Configurar serviços
+builder.Services.AddApplicationServices(builder.Configuration);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Configurar logging
+builder.Services.ConfigureLogging(builder.Configuration);
 
-string? sqlConnection = builder.Configuration.GetConnectionString("DefaultConnection"); 
-
-if (string.IsNullOrEmpty(sqlConnection))
-{
-    throw new InvalidOperationException("Connection string 'DefaultConnection' is not defined.");
-}
-
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(sqlConnection));
-
+// Configurar middleware e pipeline
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
